@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import {
-  MapContainer, TileLayer, Marker, ZoomControl, useMapEvents, useMap,
+  MapContainer, Marker, ZoomControl, useMapEvents, useMap,
 } from 'react-leaflet'
 import L from 'leaflet'
 import { useAppStore } from '../../store/useAppStore'
