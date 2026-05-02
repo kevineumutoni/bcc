@@ -61,7 +61,7 @@ const makeSearchPin = () => L.divIcon({
 // Custom layer control to fix the satellite ↔ map switching
 function CustomLayerControl() {
   const map = useMap()
-  const [active, setActive] = useState<'satellite'|'map'>('satellite')
+  const [active, setActive] = useState<'satellite'|'map'>('map')
   const satRef = useRef<L.TileLayer|null>(null)
   const mapRef = useRef<L.TileLayer|null>(null)
 
