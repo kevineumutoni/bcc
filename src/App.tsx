@@ -13,7 +13,6 @@ const qc = new QueryClient({ defaultOptions: { queries: { staleTime: 5 * 60 * 10
 export default function App() {
   return (
     <QueryClientProvider client={qc}>
-      {/* 👇 Add the value prop */}
       <ChakraProvider value={defaultSystem}>
         <BrowserRouter>
           <Routes>
