@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useAppStore } from '../../store/useAppStore'
 import { chatWithAI } from '../../api/client'
-import type { ChatMessage } from '../../types'
+
 import BaMasoLoader from '../ui/Loader'
 
 const PRE_PROMPTS = {
