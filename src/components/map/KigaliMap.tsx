@@ -66,10 +66,18 @@ function CustomLayerControl() {
   const mapRef = useRef<L.TileLayer|null>(null)
 
   useEffect(() => {
-    // SATELLITE: Esri World Imagery (no API key needed in many cases)
+    const stadiaKey = import.meta.env.VITE_STADIA_API_KEY as string | undefined
+
+    // Prefer Stadia Satellite (requires API key). Fallback to Esri if missing.
+    const satelliteUrl = stadiaKey
+      ? `https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg?api_key=${stadiaKey}`
+      : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+
+    const satelliteAttribution = stadiaKey ? '© Stadia Maps' : 'Tiles © Esri'
+
     satRef.current = L.tileLayer(
-      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-      { maxZoom: 19, attribution: 'Tiles © Esri' }
+      satelliteUrl,
+      { maxZoom: 20, attribution: satelliteAttribution }
     ).addTo(map)
 
     // MAP: OpenStreetMap
