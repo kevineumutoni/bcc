@@ -3,5 +3,17 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  server: { port: 5173, proxy: {} }
+  server: { port: 5173, proxy: {} },
+  optimizeDeps: {
+    include: ['leaflet'],
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          leaflet: ['leaflet'],
+        },
+      },
+    },
+  },
 })
