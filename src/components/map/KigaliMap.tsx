@@ -61,30 +61,23 @@ const makeSearchPin = () => L.divIcon({
 // Custom layer control to fix the satellite ↔ map switching
 function CustomLayerControl() {
   const map = useMap()
+  // DEFAULT TO MAP (not satellite)
   const [active, setActive] = useState<'satellite'|'map'>('map')
   const satRef = useRef<L.TileLayer|null>(null)
   const mapRef = useRef<L.TileLayer|null>(null)
 
   useEffect(() => {
-    const stadiaKey = import.meta.env.VITE_STADIA_API_KEY as string | undefined
-
-    // Prefer Stadia Satellite (requires API key). Fallback to Esri if missing.
-    const satelliteUrl = stadiaKey
-      ? `https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg?api_key=${stadiaKey}`
-      : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-
-    const satelliteAttribution = stadiaKey ? '© Stadia Maps' : 'Tiles © Esri'
-
+    // Create satellite layer (Stadia) but DON'T add it by default
     satRef.current = L.tileLayer(
-      satelliteUrl,
-      { maxZoom: 20, attribution: satelliteAttribution }
-    ).addTo(map)
+      'https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg',
+      { maxZoom:20, attribution:'© Stadia Maps' }
+    )
 
-    // MAP: OpenStreetMap
+    // Create map layer (OSM) and ADD IT by default
     mapRef.current = L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { maxZoom:19, attribution:'© OpenStreetMap' }
-    )
+    ).addTo(map)
 
     return () => {
       satRef.current?.remove()
