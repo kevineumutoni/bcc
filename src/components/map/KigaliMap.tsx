@@ -66,11 +66,13 @@ function CustomLayerControl() {
   const mapRef = useRef<L.TileLayer|null>(null)
 
   useEffect(() => {
+    // SATELLITE: Esri World Imagery (no API key needed in many cases)
     satRef.current = L.tileLayer(
-      'https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}.jpg',
-      { maxZoom:20, attribution:'© Stadia Maps' }
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      { maxZoom: 19, attribution: 'Tiles © Esri' }
     ).addTo(map)
 
+    // MAP: OpenStreetMap
     mapRef.current = L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       { maxZoom:19, attribution:'© OpenStreetMap' }
